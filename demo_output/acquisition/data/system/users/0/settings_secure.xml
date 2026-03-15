@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<settings version="196">
+  <setting
+    id="1"
+    name="development_settings_enabled"
+    value="1"
+    package="android"
+    defaultValue="0"
+    modified="1710474720000"
+    _count="3" />
+  <setting
+    id="2"
+    name="mock_location"
+    value="com.lexa.fakegps"
+    package="com.lexa.fakegps"
+    defaultValue=""
+    modified="1710475140000"
+    _count="2" />
+  <setting
+    id="3"
+    name="adb_enabled"
+    value="1"
+    package="android"
+    defaultValue="0"
+    modified="1710473400000"
+    _count="1" />
+</settings>

@@ -1,0 +1,4 @@
+package:/data/app/com.lexa.fakegps-1/base.apk=com.lexa.fakegps  installer=com.android.vending  firstInstallTime=1710474960  lastUpdateTime=1710474960
+package:/data/app/com.google.android.gms-2/base.apk=com.google.android.gms  installer=com.android.vending
+package:/data/app/com.google.android.apps.maps-5/base.apk=com.google.android.apps.maps  installer=com.android.vending
+package:/data/app/com.whatsapp-3/base.apk=com.whatsapp  installer=com.android.vending

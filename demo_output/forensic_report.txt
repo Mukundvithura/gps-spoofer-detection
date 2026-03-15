@@ -1,0 +1,142 @@
+======================================================================
+  GPS SPOOFING FORENSIC EXAMINATION REPORT
+  Forensic Detection and Timeline Reconstruction
+  of GPS Spoofing on Android Devices
+======================================================================
+  Report Date     : 2026-03-14 14:51:09 UTC
+  Tool            : GPS Spoof Detector v1.0.0
+  Output Directory: ./demo_output
+======================================================================
+
+SECTION A — EXECUTIVE SUMMARY
+────────────────────────────────────────
+Detection indicators confirmed : 4 / 5
+Suspicious timeline events     : 6
+Forensic verdict               : STRONG EVIDENCE OF GPS SPOOFING — 4/5 INDEPENDENT INDICATORS CONFIRMED
+
+SECTION B — DETECTION CHECK RESULTS
+────────────────────────────────────────
+
+[FLAGGED] Mock Location Setting
+  Summary : FLAGGED — Mock location app 'com.lexa.fakegps' was active.
+  Evidence:
+    - Developer Options were enabled on this device.
+    - Developer Options enablement timestamp: 2024-03-15 03:52:00 UTC
+    - Mock Location App designated: 'com.lexa.fakegps'
+    - Mock location setting modification timestamp: 2024-03-15 03:59:00 UTC
+
+[FLAGGED] Spoofing App Installed
+  Summary : FLAGGED — 1 known spoofing application(s) found: com.lexa.fakegps
+  Evidence:
+    - Package: com.lexa.fakegps  |  Name: Fake GPS Location by Lexa  |  Installed: 2024-03-15 03:56:00 UTC
+
+[CLEAR] Impossible Travel Speed
+  Summary : No impossible travel detected. All GPS transitions within 900 km/h threshold.
+
+[FLAGGED] Cell Tower Contradiction
+  Summary : FLAGGED — 5 GPS/cell tower geographic contradictions detected. Device GPS reports locations inconsistent with simultaneously active cell towers.
+  Evidence:
+    - CONTRADICTION at 2024-03-15 04:00:00 UTC: GPS reports (12.9716,77.5946)  |  Cell tower CID=28741 resolves to 'Chennai' (13.0827,80.2707)  |  Separation: 290.2 km  |  Time gap between records: 0.0 s
+    - CONTRADICTION at 2024-03-15 04:00:30 UTC: GPS reports (12.9720,77.5950)  |  Cell tower CID=28741 resolves to 'Chennai' (13.0827,80.2707)  |  Separation: 290.1 km  |  Time gap between records: 30.0 s
+    - CONTRADICTION at 2024-03-15 04:01:00 UTC: GPS reports (12.9718,77.5948)  |  Cell tower CID=28743 resolves to 'Chennai' (13.0750,80.2650)  |  Separation: 289.5 km  |  Time gap between records: 0.0 s
+    - CONTRADICTION at 2024-03-15 04:01:30 UTC: GPS reports (12.9715,77.5944)  |  Cell tower CID=28743 resolves to 'Chennai' (13.0750,80.2650)  |  Separation: 289.5 km  |  Time gap between records: 30.0 s
+    - CONTRADICTION at 2024-03-15 04:02:00 UTC: GPS reports (12.9722,77.5952)  |  Cell tower CID=28743 resolves to 'Chennai' (13.0750,80.2650)  |  Separation: 289.5 km  |  Time gap between records: 60.0 s
+
+[FLAGGED] Logcat Mock Events
+  Summary : FLAGGED — 3 mock location provider event(s) found in logcat. System-level evidence of active GPS spoofing.
+  Evidence:
+    - [03-15 09:29:00.123] 03-15 09:29:00.123  1234  5678 I MockLocationProvider: setTestProviderLocation: provider=gps lat=12.9716 lng=77.5946
+    - [03-15 09:30:00.456] 03-15 09:30:00.456  1234  5678 D LocationManagerService: Mock provider enabled for gps by com.lexa.fakegps
+    - [03-15 09:44:02.789] 03-15 09:44:02.789  1234  5678 D LocationManagerService: Mock provider disabled for gps
+
+SECTION C — COMPLETE FORENSIC TIMELINE
+────────────────────────────────────────
+TIMESTAMP (UTC)             EVENT TYPE                    SOURCE                        SUSPICIOUS
+────────────────────────  ──────────────────────────  ──────────────────────────  ─────────
+2024-03-15 03:30:00 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (13.0820, 80.2700)  Provider=gps  Accuracy=15.0m
+    Coordinates: (13.0820, 80.2700)
+2024-03-15 03:30:00 UTC     CELL_TOWER_SCAN               netconn.db                    no
+    Description: Cell tower: MCC=404  MNC=20  LAC=8001  CID=28741  Signal=-75 dBm
+2024-03-15 03:30:30 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (13.0822, 80.2703)  Provider=gps  Accuracy=12.0m
+    Coordinates: (13.0822, 80.2703)
+2024-03-15 03:30:50 UTC     MAPS_DESTINATION              da_destination_history.db     no
+    Description: Google Maps navigation to: 'Anna Salai, Chennai, Tamil Nadu'  (13.0827, 80.2707)
+    Coordinates: (13.0827, 80.2707)
+2024-03-15 03:31:00 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (13.0825, 80.2705)  Provider=gps  Accuracy=10.0m
+    Coordinates: (13.0825, 80.2705)
+2024-03-15 03:31:30 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (13.0827, 80.2707)  Provider=gps  Accuracy=8.0m
+    Coordinates: (13.0827, 80.2707)
+2024-03-15 03:32:00 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (13.0829, 80.2709)  Provider=network  Accuracy=9.0m
+    Coordinates: (13.0829, 80.2709)
+2024-03-15 03:40:00 UTC     CELL_TOWER_SCAN               netconn.db                    no
+    Description: Cell tower: MCC=404  MNC=20  LAC=8001  CID=28742  Signal=-78 dBm
+2024-03-15 03:52:00 UTC     DEVELOPER_OPTIONS_ENABLED     settings_global.xml           YES ⚠
+    Description: Developer Options were enabled on this device.
+2024-03-15 03:56:00 UTC     SPOOFING_APP_INSTALLED        package_list.txt              YES ⚠
+    Description: GPS spoofing application installed: Fake GPS Location by Lexa (com.lexa.fakegps)
+2024-03-15 03:59:00 UTC     MOCK_LOCATION_SET             settings_secure.xml           YES ⚠
+    Description: Mock Location App designated: 'com.lexa.fakegps'
+2024-03-15 03:59:10 UTC     MAPS_DESTINATION              da_destination_history.db     no
+    Description: Google Maps navigation to: 'MG Road, Bengaluru, Karnataka'  (12.9716, 77.5946)
+    Coordinates: (12.9716, 77.5946)
+2024-03-15 04:00:00 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (12.9716, 77.5946)  Provider=gps  Accuracy=5.0m
+    Coordinates: (12.9716, 77.5946)
+2024-03-15 04:00:00 UTC     CELL_TOWER_SCAN               netconn.db                    no
+    Description: Cell tower: MCC=404  MNC=20  LAC=8001  CID=28741  Signal=-72 dBm
+2024-03-15 04:00:30 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (12.9720, 77.5950)  Provider=gps  Accuracy=4.0m
+    Coordinates: (12.9720, 77.5950)
+2024-03-15 04:01:00 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (12.9718, 77.5948)  Provider=gps  Accuracy=6.0m
+    Coordinates: (12.9718, 77.5948)
+2024-03-15 04:01:00 UTC     CELL_TOWER_SCAN               netconn.db                    no
+    Description: Cell tower: MCC=404  MNC=20  LAC=8001  CID=28743  Signal=-80 dBm
+2024-03-15 04:01:30 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (12.9715, 77.5944)  Provider=gps  Accuracy=5.5m
+    Coordinates: (12.9715, 77.5944)
+2024-03-15 04:02:00 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (12.9722, 77.5952)  Provider=gps  Accuracy=4.0m
+    Coordinates: (12.9722, 77.5952)
+2024-03-15 04:10:00 UTC     CELL_TOWER_SCAN               netconn.db                    no
+    Description: Cell tower: MCC=404  MNC=20  LAC=8001  CID=28741  Signal=-76 dBm
+2024-03-15 04:30:00 UTC     CELL_TOWER_SCAN               netconn.db                    no
+    Description: Cell tower: MCC=404  MNC=20  LAC=8001  CID=28742  Signal=-74 dBm
+2024-03-15 04:31:40 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (13.0828, 80.2706)  Provider=gps  Accuracy=11.0m
+    Coordinates: (13.0828, 80.2706)
+2024-03-15 04:32:10 UTC     GPS_LOCATION                  herrevad.db                   no
+    Description: GPS fix: (13.0830, 80.2708)  Provider=network  Accuracy=10.0m
+    Coordinates: (13.0830, 80.2708)
+2026-03-15 03:59:00 UTC     MOCK_LOCATION_LOGCAT          logcat_dump.txt               YES ⚠
+    Description: Logcat: 03-15 09:29:00.123  1234  5678 I MockLocationProvider: setTestProviderLocation: provider=gps lat=12.9716 lng=77.
+2026-03-15 04:00:00 UTC     MOCK_LOCATION_LOGCAT          logcat_dump.txt               YES ⚠
+    Description: Logcat: 03-15 09:30:00.456  1234  5678 D LocationManagerService: Mock provider enabled for gps by com.lexa.fakegps
+2026-03-15 04:14:02 UTC     MOCK_LOCATION_LOGCAT          logcat_dump.txt               YES ⚠
+    Description: Logcat: 03-15 09:44:02.789  1234  5678 D LocationManagerService: Mock provider disabled for gps
+
+SECTION D — CONCLUSION AND EXAMINER DECLARATION
+────────────────────────────────────────
+
+Based on forensic examination of the acquired Android artefacts,
+this examiner concludes that the GPS location data recorded on
+the examined device during the identified period was deliberately
+falsified using a third-party mock location application.
+
+VERDICT: STRONG EVIDENCE OF GPS SPOOFING — 4/5 INDEPENDENT INDICATORS CONFIRMED
+
+Examiner Declaration:
+I declare that the facts stated in this report are based solely
+on the forensic artefacts analysed using documented methodology.
+I have indicated where findings are matters of inference.
+
+Signature: _________________________  Date: __________________
+
+======================================================================
+                        END OF REPORT
+======================================================================

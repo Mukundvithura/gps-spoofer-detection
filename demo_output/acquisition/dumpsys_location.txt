@@ -1,0 +1,7 @@
+Location Manager State:
+  Mock Location Providers: []
+  Last Known Locations:
+    gps: Location[gps 13.082700,80.270700 acc=10 et=+1s]
+  Providers:
+    network (enabled)
+    gps (enabled)
