@@ -225,9 +225,11 @@ def main():
         verbose=args.verbose
     )
     reporter.generate_console_report()
-    csv_path = reporter.generate_csv_timeline()
-    txt_path = reporter.generate_text_report()
+    json_path = reporter.generate_json_report()
+    csv_path  = reporter.generate_csv_timeline()
+    txt_path  = reporter.generate_text_report()
 
+    print(f"  [OK] JSON report saved       : {json_path}")
     print(f"  [OK] CSV timeline saved      : {csv_path}")
     print(f"  [OK] Text report saved       : {txt_path}")
 

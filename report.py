@@ -15,6 +15,7 @@ Output types:
 
 import os
 import csv
+import json
 import datetime
 
 from detector import SpoofingDetector
@@ -216,6 +217,111 @@ class ReportGenerator:
   witness testimony in appropriate academic or legal proceedings.
 """)
         sep("═")
+
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # OUTPUT 2: JSON Report (for dashboard upload)
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def generate_json_report(self) -> str:
+        """
+        Write a structured JSON report suitable for upload to the
+        GPS Spoof Detector web dashboard.
+
+        Returns the path to the written JSON file.
+        """
+        import re
+        json_path = os.path.join(self.output_dir, "forensic_report.json")
+
+        flag_count = sum(1 for r in self.results.values() if r["flagged"])
+        susp_count = sum(1 for e in self.timeline if e.get("suspicious"))
+
+        # indicators
+        indicators = []
+        for name, result in self.results.items():
+            indicators.append({
+                "name":     name,
+                "flagged":  result["flagged"],
+                "summary":  result["summary"],
+                "evidence": result.get("evidence", []),
+            })
+
+        # timeline (deduplicated by ts_ms + event_type + first 60 chars of description)
+        seen = set()
+        timeline_rows = []
+        for event in self.timeline:
+            key = (event.get("ts_ms"), event.get("event_type"), event.get("description", "")[:60])
+            if key in seen:
+                continue
+            seen.add(key)
+            timeline_rows.append({
+                "ts_utc":      event.get("ts_utc", ""),
+                "ts_ms":       event.get("ts_ms", 0),
+                "source":      event.get("source", ""),
+                "event_type":  event.get("event_type", ""),
+                "description": event.get("description", ""),
+                "suspicious":  bool(event.get("suspicious")),
+                "lat":         event.get("lat") or None,
+                "lng":         event.get("lng") or None,
+            })
+
+        # spoofing apps
+        apps = []
+        for app in self.data.get("spoofing_apps", []):
+            apps.append({
+                "package":      app.get("package", ""),
+                "name":         app.get("name", ""),
+                "installed_at": app.get("installed_at", ""),
+            })
+
+        # cell contradictions parsed from evidence strings
+        cell_result = self.results.get("Cell Tower Contradiction", {})
+        seen_contra = set()
+        unique_contradictions = []
+        for ev_str in cell_result.get("evidence", []):
+            m = re.match(
+                r"CONTRADICTION at (.+?):\s+GPS reports \(([0-9.\-]+),([0-9.\-]+)\)"
+                r".*?CID=(\d+) resolves to \'([^\']+)\' \(([0-9.\-]+),([0-9.\-]+)\)"
+                r".*?Separation: ([0-9.]+) km",
+                ev_str
+            )
+            if m:
+                key = (m.group(1).strip(), m.group(4), m.group(2), m.group(3))
+                if key not in seen_contra:
+                    seen_contra.add(key)
+                    unique_contradictions.append({
+                        "ts_utc":        m.group(1).strip(),
+                        "gps_lat":       float(m.group(2)),
+                        "gps_lng":       float(m.group(3)),
+                        "cid":           int(m.group(4)),
+                        "cell_city":     m.group(5),
+                        "cell_lat":      float(m.group(6)),
+                        "cell_lng":      float(m.group(7)),
+                        "separation_km": float(m.group(8)),
+                    })
+
+        report = {
+            "meta": {
+                "tool":         "GPS Spoof Detector v1.0.0",
+                "generated_at": self._generated,
+                "output_dir":   self.output_dir,
+            },
+            "summary": {
+                "indicators_confirmed":   flag_count,
+                "total_indicators":       len(self.results),
+                "suspicious_event_count": susp_count,
+                "verdict":                self._verdict,
+            },
+            "indicators":          indicators,
+            "timeline":            timeline_rows,
+            "spoofing_apps":       apps,
+            "cell_contradictions": unique_contradictions,
+        }
+
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(report, f, indent=2, default=str)
+
+        return json_path
 
     # ─────────────────────────────────────────────────────────────────────────
     # OUTPUT 2: CSV Timeline

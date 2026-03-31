@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<settings version="196">
+  <setting
+    id="10"
+    name="development_settings_enabled"
+    value="1"
+    package="android"
+    defaultValue="0"
+    modified="1710474720000"
+    _count="5" />
+</settings>

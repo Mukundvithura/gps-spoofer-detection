@@ -1,0 +1,229 @@
+{
+    "meta": {
+        "tool": "GPS Spoof Detector v1.0.0",
+        "generated_at": "2026-03-30 06:15:00 UTC",
+        "output_dir": "./out"
+    },
+    "summary": {
+        "indicators_confirmed": 0,
+        "total_indicators": 5,
+        "suspicious_event_count": 0,
+        "verdict": "NO EVIDENCE OF GPS SPOOFING — 0/5 INDICATORS TRIGGERED"
+    },
+    "indicators": [
+        {
+            "name": "Mock Location Setting",
+            "flagged": false,
+            "summary": "CLEAR — Developer Options are disabled. No mock location app designated.",
+            "evidence": []
+        },
+        {
+            "name": "Spoofing App Installed",
+            "flagged": false,
+            "summary": "CLEAR — No known GPS spoofing applications found on device.",
+            "evidence": []
+        },
+        {
+            "name": "Impossible Travel Speed",
+            "flagged": false,
+            "summary": "No impossible travel detected. All GPS transitions within 900 km/h threshold.",
+            "evidence": []
+        },
+        {
+            "name": "Cell Tower Contradiction",
+            "flagged": false,
+            "summary": "CLEAR — GPS coordinates are consistent with cell tower geographic regions.",
+            "evidence": []
+        },
+        {
+            "name": "Logcat Mock Events",
+            "flagged": false,
+            "summary": "CLEAR — No mock location provider events found in logcat.",
+            "evidence": []
+        }
+    ],
+    "timeline": [
+        {
+            "ts_utc": "2026-03-30 05:30:00 UTC",
+            "ts_ms": 1743310200000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0820, 80.2700)  Provider=gps  Accuracy=14.0m",
+            "suspicious": false,
+            "lat": 13.082,
+            "lng": 80.27
+        },
+        {
+            "ts_utc": "2026-03-30 05:30:00 UTC",
+            "ts_ms": 1743310200000,
+            "source": "netconn.db",
+            "event_type": "CELL_TOWER_SCAN",
+            "description": "Cell tower: MCC=404  MNC=20  LAC=8001  CID=28741  Signal=-71 dBm",
+            "suspicious": false,
+            "lat": null,
+            "lng": null
+        },
+        {
+            "ts_utc": "2026-03-30 05:30:30 UTC",
+            "ts_ms": 1743310230000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0823, 80.2703)  Provider=gps  Accuracy=11.0m",
+            "suspicious": false,
+            "lat": 13.0823,
+            "lng": 80.2703
+        },
+        {
+            "ts_utc": "2026-03-30 05:31:00 UTC",
+            "ts_ms": 1743310260000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0826, 80.2706)  Provider=gps  Accuracy=9.0m",
+            "suspicious": false,
+            "lat": 13.0826,
+            "lng": 80.2706
+        },
+        {
+            "ts_utc": "2026-03-30 05:31:30 UTC",
+            "ts_ms": 1743310290000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0828, 80.2708)  Provider=gps  Accuracy=8.0m",
+            "suspicious": false,
+            "lat": 13.0828,
+            "lng": 80.2708
+        },
+        {
+            "ts_utc": "2026-03-30 05:31:50 UTC",
+            "ts_ms": 1743310310000,
+            "source": "da_destination_history.db",
+            "event_type": "MAPS_DESTINATION",
+            "description": "Google Maps navigation to: 'Anna Salai, Chennai, Tamil Nadu'  (13.0827, 80.2707)",
+            "suspicious": false,
+            "lat": 13.0827,
+            "lng": 80.2707
+        },
+        {
+            "ts_utc": "2026-03-30 05:32:00 UTC",
+            "ts_ms": 1743310320000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0827, 80.2707)  Provider=gps  Accuracy=7.0m",
+            "suspicious": false,
+            "lat": 13.0827,
+            "lng": 80.2707
+        },
+        {
+            "ts_utc": "2026-03-30 05:40:00 UTC",
+            "ts_ms": 1743310800000,
+            "source": "netconn.db",
+            "event_type": "CELL_TOWER_SCAN",
+            "description": "Cell tower: MCC=404  MNC=20  LAC=8001  CID=28742  Signal=-76 dBm",
+            "suspicious": false,
+            "lat": null,
+            "lng": null
+        },
+        {
+            "ts_utc": "2026-03-30 05:40:30 UTC",
+            "ts_ms": 1743310830000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0831, 80.2711)  Provider=gps  Accuracy=10.0m",
+            "suspicious": false,
+            "lat": 13.0831,
+            "lng": 80.2711
+        },
+        {
+            "ts_utc": "2026-03-30 05:41:00 UTC",
+            "ts_ms": 1743310860000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0835, 80.2714)  Provider=gps  Accuracy=9.0m",
+            "suspicious": false,
+            "lat": 13.0835,
+            "lng": 80.2714
+        },
+        {
+            "ts_utc": "2026-03-30 05:50:00 UTC",
+            "ts_ms": 1743311400000,
+            "source": "netconn.db",
+            "event_type": "CELL_TOWER_SCAN",
+            "description": "Cell tower: MCC=404  MNC=20  LAC=8001  CID=28743  Signal=-79 dBm",
+            "suspicious": false,
+            "lat": null,
+            "lng": null
+        },
+        {
+            "ts_utc": "2026-03-30 05:50:30 UTC",
+            "ts_ms": 1743311430000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0840, 80.2718)  Provider=gps  Accuracy=12.0m",
+            "suspicious": false,
+            "lat": 13.084,
+            "lng": 80.2718
+        },
+        {
+            "ts_utc": "2026-03-30 05:51:00 UTC",
+            "ts_ms": 1743311460000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0843, 80.2720)  Provider=network  Accuracy=11.0m",
+            "suspicious": false,
+            "lat": 13.0843,
+            "lng": 80.272
+        },
+        {
+            "ts_utc": "2026-03-30 06:00:00 UTC",
+            "ts_ms": 1743314400000,
+            "source": "netconn.db",
+            "event_type": "CELL_TOWER_SCAN",
+            "description": "Cell tower: MCC=404  MNC=20  LAC=8001  CID=28741  Signal=-73 dBm",
+            "suspicious": false,
+            "lat": null,
+            "lng": null
+        },
+        {
+            "ts_utc": "2026-03-30 06:00:30 UTC",
+            "ts_ms": 1743314430000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0838, 80.2715)  Provider=gps  Accuracy=8.0m",
+            "suspicious": false,
+            "lat": 13.0838,
+            "lng": 80.2715
+        },
+        {
+            "ts_utc": "2026-03-30 06:01:00 UTC",
+            "ts_ms": 1743314460000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0835, 80.2712)  Provider=gps  Accuracy=7.0m",
+            "suspicious": false,
+            "lat": 13.0835,
+            "lng": 80.2712
+        },
+        {
+            "ts_utc": "2026-03-30 06:10:00 UTC",
+            "ts_ms": 1743315000000,
+            "source": "netconn.db",
+            "event_type": "CELL_TOWER_SCAN",
+            "description": "Cell tower: MCC=404  MNC=20  LAC=8001  CID=28742  Signal=-74 dBm",
+            "suspicious": false,
+            "lat": null,
+            "lng": null
+        },
+        {
+            "ts_utc": "2026-03-30 06:10:30 UTC",
+            "ts_ms": 1743315030000,
+            "source": "herrevad.db",
+            "event_type": "GPS_LOCATION",
+            "description": "GPS fix: (13.0829, 80.2709)  Provider=gps  Accuracy=9.0m",
+            "suspicious": false,
+            "lat": 13.0829,
+            "lng": 80.2709
+        }
+    ],
+    "spoofing_apps": [],
+    "cell_contradictions": []
+}
